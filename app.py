@@ -23,7 +23,17 @@ def is_draw(board):
 def tic_tac_toe():
     """Main function to play Tic Tac Toe."""
     board = [[' ' for _ in range(3)] for _ in range(3)]
-    current_player = 'X'
+
+    # Allow players to choose their symbols
+    player1 = input("Player 1, choose your symbol (X/O): ").upper()
+    while player1 not in ['X', 'O']:
+        print("Invalid choice. Please choose 'X' or 'O'.")
+        player1 = input("Player 1, choose your symbol (X/O): ").upper()
+
+    player2 = 'O' if player1 == 'X' else 'X'
+    print(f"Player 1 is {player1} and Player 2 is {player2}")
+
+    current_player = player1
 
     while True:
         print_board(board)
@@ -58,7 +68,7 @@ def tic_tac_toe():
             break
 
         # Switch players
-        current_player = 'O' if current_player == 'X' else 'X'
+        current_player = player2 if current_player == player1 else player1
 
 if __name__ == "__main__":
     tic_tac_toe()
