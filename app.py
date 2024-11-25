@@ -22,43 +22,60 @@ def is_draw(board):
 
 def tic_tac_toe():
     """Main function to play Tic Tac Toe."""
-    board = [[' ' for _ in range(3)] for _ in range(3)]
-    current_player = 'X'
-
     while True:
-        print_board(board)
-        print(f"Player {current_player}'s turn")
+        board = [[' ' for _ in range(3)] for _ in range(3)]
 
-        # Get the player's move
-        try:
-            row = int(input("Enter row (0, 1, 2): "))
-            col = int(input("Enter column (0, 1, 2): "))
-        except ValueError:
-            print("Invalid input. Please enter numbers between 0 and 2.")
-            continue
+        # Allow players to choose their symbols
+        player1 = input("Player 1, choose your symbol (X/O): ").upper()
+        while player1 not in ['X', 'O']:
+            print("Invalid choice. Please choose 'X' or 'O'.")
+            player1 = input("Player 1, choose your symbol (X/O): ").upper()
 
-        # Check if the move is valid
-        if row not in range(3) or col not in range(3) or board[row][col] != ' ':
-            print("Invalid move. Try again.")
-            continue
+        player2 = 'O' if player1 == 'X' else 'X'
+        print(f"Player 1 is {player1} and Player 2 is {player2}")
 
-        # Make the move
-        board[row][col] = current_player
+        current_player = player1
 
-        # Check for a winner
-        if check_winner(board, current_player):
+        while True:
             print_board(board)
-            print(f"Player {current_player} wins!")
-            break
+            print(f"Player {current_player}'s turn")
 
-        # Check for a draw
-        if is_draw(board):
-            print_board(board)
-            print("It's a draw!")
-            break
+            # Get the player's move
+            try:
+                row = int(input("Enter row (0, 1, 2): "))
+                col = int(input("Enter column (0, 1, 2): "))
+            except ValueError:
+                print("Invalid input. Please enter numbers between 0 and 2.")
+                continue
 
-        # Switch players
-        current_player = 'O' if current_player == 'X' else 'X'
+            # Check if the move is valid
+            if row not in range(3) or col not in range(3) or board[row][col] != ' ':
+                print("Invalid move. Try again.")
+                continue
+
+            # Make the move
+            board[row][col] = current_player
+
+            # Check for a winner
+            if check_winner(board, current_player):
+                print_board(board)
+                print(f"Player {current_player} wins!")
+                break
+
+            # Check for a draw
+            if is_draw(board):
+                print_board(board)
+                print("It's a draw!")
+                break
+
+            # Switch players
+            current_player = player2 if current_player == player1 else player1
+
+        # Ask if players want to play again
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != 'yes':
+            print("Thanks for playing!")
+            break
 
 if __name__ == "__main__":
     tic_tac_toe()
